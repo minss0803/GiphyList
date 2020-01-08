@@ -55,7 +55,7 @@ struct SearchViewModel: SearchViewBindable {
             .map { data -> (String, Int)? in
                 let count = data.list.count
                 let totalCount = data.pageInfo.totalCount ?? 0
-                guard count <= totalCount else {
+                guard count < totalCount-1 else {
                     return nil
                 }
                 if data.indexPath.row == count-1  {
@@ -93,7 +93,7 @@ struct SearchViewModel: SearchViewBindable {
         
         let clearList = clearBtnPressed.asObservable()
                   .map { [DataModel]() }
-        
+
        // 처음 불러온 데이터와, paging 처리된 데이터를 결합
         let _ = Observable
             .merge(

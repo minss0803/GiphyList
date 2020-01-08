@@ -8,7 +8,14 @@
 
 import Foundation
 import UIKit
+import RxSwift
+import RxCocoa
 import Kingfisher
+
+protocol SearchCellBindable {
+    // ViewModel -> View
+    var setImage: PublishRelay<UIImage> { get }
+}
 
 class SearchCell: UICollectionViewCell {
     typealias Data = (DataModel)
@@ -19,6 +26,8 @@ class SearchCell: UICollectionViewCell {
         }
     }
     let imageView = UIImageView()  // 스크린샷 파일
+    var disposeBag = DisposeBag()
+    var viewModel: SearchCellViewModel?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,10 +40,27 @@ class SearchCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        cancelLoadImage()
+    }
+    
     func setData(data: Data) {
-        imageView.do {
-            $0.kf.setImage(with: URL(string: data.images?.previewGif?.url ?? ""))
-        }
+        self.viewModel?.data.onNext(data)
+    }
+    
+    func bind(_ viewModel: SearchCellViewModel) {
+        self.viewModel = viewModel
+        
+        cancelLoadImage()
+        
+        viewModel.setImage
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] (image) in
+                self?.imageView.image = image
+            })
+            .disposed(by: disposeBag)
     }
     
     func attribute() {
@@ -55,6 +81,11 @@ class SearchCell: UICollectionViewCell {
     }
 }
 extension SearchCell {
+    func cancelLoadImage() {
+        self.imageView.image = nil
+        disposeBag = DisposeBag()
+    }
+    
     func shrink(down: Bool) {
         UIView.animate(withDuration: 0.15) {
             if down {

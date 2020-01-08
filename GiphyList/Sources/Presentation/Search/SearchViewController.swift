@@ -121,6 +121,7 @@ class SearchViewController: ViewController <SearchViewBindable> {
             .drive(collectionView.rx.items) { cv, row, data in
                 let index = IndexPath(row: row, section: 0)
                 let cell = cv.dequeueReusableCell(withReuseIdentifier: String(describing: SearchCell.self), for: index) as! SearchCell
+                cell.bind(SearchCellViewModel())
                 cell.setData(data: data)
                 return cell
             }

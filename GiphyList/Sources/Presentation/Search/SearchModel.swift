@@ -26,7 +26,5 @@ struct SearchModel {
                       "pageCount" : data.1 + 1] as [String : Any]
         return searchGifNetwork.getSearchGifList(params)
     }
-    
-    
 
 }

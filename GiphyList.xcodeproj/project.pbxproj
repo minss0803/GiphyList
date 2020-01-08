@@ -27,6 +27,9 @@
 		11BAD8472396913D00EDF233 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BAD8462396913D00EDF233 /* SearchViewController.swift */; };
 		11E6E28E23C5E92B00CE0A42 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E6E28D23C5E92B00CE0A42 /* UIView+Extension.swift */; };
 		11E6E29023C64CC200CE0A42 /* ImageLoadNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E6E28F23C64CC200CE0A42 /* ImageLoadNetwork.swift */; };
+		11E6E29323C6661300CE0A42 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E6E29223C6661300CE0A42 /* ImageCache.swift */; };
+		11E6E29523C66E8300CE0A42 /* SearchCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E6E29423C66E8300CE0A42 /* SearchCellViewModel.swift */; };
+		11E6E29723C66E8C00CE0A42 /* SearchCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E6E29623C66E8C00CE0A42 /* SearchCellModel.swift */; };
 		11F0E09823969D29000B4616 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F0E09723969D29000B4616 /* SearchCell.swift */; };
 		11F0E09A23969F92000B4616 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F0E09923969F92000B4616 /* SearchViewModel.swift */; };
 		11F0E09C23969FB4000B4616 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F0E09B23969FB4000B4616 /* SearchModel.swift */; };
@@ -81,6 +84,9 @@
 		11BAD8462396913D00EDF233 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		11E6E28D23C5E92B00CE0A42 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		11E6E28F23C64CC200CE0A42 /* ImageLoadNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoadNetwork.swift; sourceTree = "<group>"; };
+		11E6E29223C6661300CE0A42 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		11E6E29423C66E8300CE0A42 /* SearchCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCellViewModel.swift; sourceTree = "<group>"; };
+		11E6E29623C66E8C00CE0A42 /* SearchCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCellModel.swift; sourceTree = "<group>"; };
 		11F0E09723969D29000B4616 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		11F0E09923969F92000B4616 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		11F0E09B23969FB4000B4616 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
@@ -293,10 +299,20 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		11E6E29123C6559300CE0A42 /* ImageCache */ = {
+			isa = PBXGroup;
+			children = (
+				11E6E29223C6661300CE0A42 /* ImageCache.swift */,
+			);
+			path = ImageCache;
+			sourceTree = "<group>";
+		};
 		11F0E09623969CCF000B4616 /* Components */ = {
 			isa = PBXGroup;
 			children = (
 				11F0E09723969D29000B4616 /* SearchCell.swift */,
+				11E6E29423C66E8300CE0A42 /* SearchCellViewModel.swift */,
+				11E6E29623C66E8C00CE0A42 /* SearchCellModel.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -304,6 +320,7 @@
 		11F0E09D2396E26D000B4616 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				11E6E29123C6559300CE0A42 /* ImageCache */,
 				1123A6FE2396EF1A0074502C /* Realm */,
 				11F0E09E2396E282000B4616 /* WaterfallLayout.swift */,
 				11E6E28D23C5E92B00CE0A42 /* UIView+Extension.swift */,
@@ -580,6 +597,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11E6E29323C6661300CE0A42 /* ImageCache.swift in Sources */,
 				11F0E09C23969FB4000B4616 /* SearchModel.swift in Sources */,
 				11E6E29023C64CC200CE0A42 /* ImageLoadNetwork.swift in Sources */,
 				11BAD8472396913D00EDF233 /* SearchViewController.swift in Sources */,
@@ -594,12 +612,14 @@
 				1123A7002396EF300074502C /* RelamManager.swift in Sources */,
 				11F0E09A23969F92000B4616 /* SearchViewModel.swift in Sources */,
 				1123A7022396F3900074502C /* ImageDetailViewModel.swift in Sources */,
+				11E6E29723C66E8C00CE0A42 /* SearchCellModel.swift in Sources */,
 				11BAD8422396813E00EDF233 /* TableHeaderView.swift in Sources */,
 				11BAD844239683FD00EDF233 /* MainModel.swift in Sources */,
 				1123A707239717600074502C /* FavoriteCell.swift in Sources */,
 				11B1F74023952E2B00ACB693 /* SearchGifNetwork.swift in Sources */,
 				11B1F7442395310B00ACB693 /* SearchGif.swift in Sources */,
 				11E6E28E23C5E92B00CE0A42 /* UIView+Extension.swift in Sources */,
+				11E6E29523C66E8300CE0A42 /* SearchCellViewModel.swift in Sources */,
 				11B1F74623965C9E00ACB693 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
