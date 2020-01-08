@@ -14,4 +14,5 @@ struct ImageDetailViewModel: ImageDetailViewBinable {
     let imageData = PublishSubject<FavoriteCharacter>()
     let realmManager = RealmManager()
 
+    
 }

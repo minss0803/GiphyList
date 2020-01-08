@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import Kingfisher
-import SnapKit
 
 class SearchCell: UICollectionViewCell {
     typealias Data = (DataModel)
@@ -49,9 +48,10 @@ class SearchCell: UICollectionViewCell {
     func layout() {
         addSubview(imageView)
         
-        imageView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+        imageView.makeConstraints.do {
+            $0.equalToSuperView()
         }
+
     }
 }
 extension SearchCell {

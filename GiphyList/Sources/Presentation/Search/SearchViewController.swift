@@ -188,29 +188,38 @@ class SearchViewController: ViewController <SearchViewBindable> {
         headerView.addSubview(cancelButton)
         headerView.addSubview(borderLineView)
         
-        headerView.snp.makeConstraints {
-            $0.top.left.right.equalToSuperview()
-        }
-        searchView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.topMargin).inset(10)
-            $0.bottom.left.equalToSuperview().inset(20)
-            $0.height.equalTo(50)
+        headerView.makeConstraints.do {
+            $0.top()
+            $0.leading()
+            $0.trailing()
         }
         
-        cancelButton.snp.makeConstraints {
-            $0.top.bottom.equalTo(searchView)
-            $0.left.equalTo(searchView.snp.right)
-            $0.right.equalToSuperview()
+        searchView.makeConstraints.do {
+            $0.top(equalTo: view.layoutMarginsGuide.topAnchor, constant: 10)
+            $0.leading(constant: 20)
+            $0.bottom(constant: -20)
+            $0.height(constant: 50)
         }
         
-        borderLineView.snp.makeConstraints {
-            $0.bottom.left.right.equalToSuperview()
-            $0.height.equalTo(1)
+        cancelButton.makeConstraints.do {
+            $0.top(equalTo: searchView.topAnchor)
+            $0.bottom(equalTo: searchView.bottomAnchor)
+            $0.leading(equalTo: searchView.trailingAnchor)
+            $0.trailing()
         }
         
-        collectionView.snp.makeConstraints {
-            $0.top.equalTo(headerView.snp.bottom)
-            $0.left.right.bottom.equalToSuperview()
+        borderLineView.makeConstraints.do {
+            $0.bottom()
+            $0.leading()
+            $0.trailing()
+            $0.height(constant: 1)
+        }
+        
+        collectionView.makeConstraints.do {
+            $0.top(equalTo: headerView.bottomAnchor)
+            $0.bottom()
+            $0.leading()
+            $0.trailing()
         }
     }
     

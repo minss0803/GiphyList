@@ -43,7 +43,6 @@ class FavoriteButton: UIButton {
             $0.favoriteState = .notFavorited
         }
     }
-    func layout() {
-        
-    }
+    
+    func layout() {}
 }

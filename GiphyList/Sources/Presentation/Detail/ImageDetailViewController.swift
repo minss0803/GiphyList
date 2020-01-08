@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 import RxSwift
 import RxCocoa
+import RxAppState
 import Then
-import SnapKit
 import Kingfisher
 
 protocol ImageDetailViewBinable {
@@ -27,31 +27,11 @@ class ImageDetailViewController: ViewController<ImageDetailViewBinable> {
     let closeButton = UIButton()
     
     override func bind(_ viewModel: ImageDetailViewBinable) {
-        self.view.layoutIfNeeded()
         self.viewModel = viewModel
         
         closeButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
                 self?.dismiss(animated: true)
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.imageData
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { [weak self] (model) in
-                let imageWidth = Float(model.width) ?? 0
-                let imageHeight = Float(model.height) ?? 0
-                let ratio = imageHeight / imageWidth
-
-                self?.gifImageView.do {
-                    $0.kf.setImage(with: URL(string: model.imageUrl))
-                    $0.snp.remakeConstraints {
-                        $0.width.equalToSuperview()
-                        $0.height.equalTo(self!.view.snp.width).multipliedBy(ratio)
-                        $0.centerX.equalToSuperview()
-                        $0.centerY.equalToSuperview()
-                    }
-                }
             })
             .disposed(by: disposeBag)
         
@@ -67,6 +47,31 @@ class ImageDetailViewController: ViewController<ImageDetailViewBinable> {
             })
             .disposed(by: disposeBag)
 
+        // 이미지 데이터가 올바르게 전달되고, 화면이 최초로 그려진 경우 실행
+        Observable.combineLatest(viewModel.imageData, self.rx.viewDidLoad)
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] (model, action) in
+                
+                // 이미지뷰 사이즈 조정
+                let imageWidth  = Float(model.width) ?? 0
+                let imageHeight = Float(model.height) ?? 0
+                let ratio = imageHeight / imageWidth
+                
+                self?.gifImageView.do {
+                    $0.kf.setImage(with: URL(string: model.imageUrl))
+                    $0.remakeConstraints.do {
+                        $0.width()
+                        $0.height(equalTo: self!.view.widthAnchor, multiplier: CGFloat(ratio))
+                        $0.centerX()
+                        $0.centerY()
+                    }
+                }
+                // 좋아요 버튼 노출
+                self?.favoriteButton.isHidden = false
+            })
+            .disposed(by: disposeBag)
+        
+        // 이미지 데이터가 올바르게 전달되고, 좋아요 버튼이 선택된 경우
         Observable.combineLatest(viewModel.imageData, favoriteButton.rx.tap)
             .subscribe(onNext: { [weak self] (model, action) in
                 if self?.favoriteButton.favoriteState == .favorited {
@@ -90,24 +95,30 @@ class ImageDetailViewController: ViewController<ImageDetailViewBinable> {
         closeButton.do {
             $0.setImage(UIImage(named: "icon_close"), for: .normal)
         }
+        favoriteButton.do {
+            $0.isHidden = true
+        }
     }
     override func layout() {
         view.addSubview(gifImageView)
         view.addSubview(favoriteButton)
         view.addSubview(closeButton)
         
-        gifImageView.snp.makeConstraints {
-            $0.width.height.equalTo(0)
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview()
+        gifImageView.makeConstraints.do {
+            $0.width(constant:0)
+            $0.height(constant:0)
+            $0.centerX()
+            $0.centerY()
         }
 
-        favoriteButton.snp.makeConstraints {
-            $0.right.bottom.equalTo(gifImageView).inset(20)
+        favoriteButton.makeConstraints.do {
+            $0.bottom(equalTo: gifImageView.bottomAnchor, constant: -20)
+            $0.trailing(equalTo: gifImageView.trailingAnchor, constant: -20)
         }
         
-        closeButton.snp.makeConstraints {
-            $0.top.right.equalToSuperview().inset(30)
+        closeButton.makeConstraints.do {
+            $0.top(constant: 30)
+            $0.trailing(constant: -30)
         }
     }
 }

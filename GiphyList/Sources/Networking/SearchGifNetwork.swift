@@ -52,7 +52,6 @@ class SearchGifNetworkImpl: SearchGifNetwork {
                 }
         }
     }
-
 }
 
 private extension SearchGifNetworkImpl {

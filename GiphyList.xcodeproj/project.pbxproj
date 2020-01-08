@@ -25,6 +25,8 @@
 		11BAD8422396813E00EDF233 /* TableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BAD8412396813E00EDF233 /* TableHeaderView.swift */; };
 		11BAD844239683FD00EDF233 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BAD843239683FD00EDF233 /* MainModel.swift */; };
 		11BAD8472396913D00EDF233 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BAD8462396913D00EDF233 /* SearchViewController.swift */; };
+		11E6E28E23C5E92B00CE0A42 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E6E28D23C5E92B00CE0A42 /* UIView+Extension.swift */; };
+		11E6E29023C64CC200CE0A42 /* ImageLoadNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E6E28F23C64CC200CE0A42 /* ImageLoadNetwork.swift */; };
 		11F0E09823969D29000B4616 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F0E09723969D29000B4616 /* SearchCell.swift */; };
 		11F0E09A23969F92000B4616 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F0E09923969F92000B4616 /* SearchViewModel.swift */; };
 		11F0E09C23969FB4000B4616 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F0E09B23969FB4000B4616 /* SearchModel.swift */; };
@@ -77,6 +79,8 @@
 		11BAD8412396813E00EDF233 /* TableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableHeaderView.swift; sourceTree = "<group>"; };
 		11BAD843239683FD00EDF233 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		11BAD8462396913D00EDF233 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		11E6E28D23C5E92B00CE0A42 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		11E6E28F23C64CC200CE0A42 /* ImageLoadNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoadNetwork.swift; sourceTree = "<group>"; };
 		11F0E09723969D29000B4616 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		11F0E09923969F92000B4616 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		11F0E09B23969FB4000B4616 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
@@ -255,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				11B1F73F23952E2B00ACB693 /* SearchGifNetwork.swift */,
+				11E6E28F23C64CC200CE0A42 /* ImageLoadNetwork.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -301,6 +306,7 @@
 			children = (
 				1123A6FE2396EF1A0074502C /* Realm */,
 				11F0E09E2396E282000B4616 /* WaterfallLayout.swift */,
+				11E6E28D23C5E92B00CE0A42 /* UIView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -575,6 +581,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				11F0E09C23969FB4000B4616 /* SearchModel.swift in Sources */,
+				11E6E29023C64CC200CE0A42 /* ImageLoadNetwork.swift in Sources */,
 				11BAD8472396913D00EDF233 /* SearchViewController.swift in Sources */,
 				11F0E09F2396E282000B4616 /* WaterfallLayout.swift in Sources */,
 				1123A7052396FF1A0074502C /* FavoriteButton.swift in Sources */,
@@ -592,6 +599,7 @@
 				1123A707239717600074502C /* FavoriteCell.swift in Sources */,
 				11B1F74023952E2B00ACB693 /* SearchGifNetwork.swift in Sources */,
 				11B1F7442395310B00ACB693 /* SearchGif.swift in Sources */,
+				11E6E28E23C5E92B00CE0A42 /* UIView+Extension.swift in Sources */,
 				11B1F74623965C9E00ACB693 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
