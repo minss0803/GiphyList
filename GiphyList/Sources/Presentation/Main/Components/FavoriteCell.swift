@@ -18,6 +18,11 @@ class FavoriteCell: UITableViewCell {
     let containerView = UIView()
     let previewImageView = UIImageView() // 미리보기 이미지
     
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+        shrink(down: highlighted)
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -75,5 +80,19 @@ class FavoriteCell: UITableViewCell {
             $0.edges.equalToSuperview()
             $0.height.equalTo(300)
         }
+    }
+    
+}
+extension FavoriteCell {
+    func shrink(down: Bool) {
+        UIView.animate(withDuration: 0.2,
+                       delay: 0.0,
+                       options: [.allowUserInteraction, .curveEaseInOut], animations: {
+            if down {
+                self.containerView.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+            } else {
+                self.containerView.transform = .identity
+            }
+        })
     }
 }

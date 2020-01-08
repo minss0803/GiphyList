@@ -23,8 +23,6 @@ protocol MainViewBindable {
 class MainViewController: ViewController <MainViewBindable> {
 
     let tableView = UITableView()
-    let headerImageView = UIImageView()
-    let headerTitleLabel = UILabel()
     let tableHeaderView = TableHeaderView()
     let tablebackgroundView = UIView()
     
@@ -57,11 +55,7 @@ class MainViewController: ViewController <MainViewBindable> {
 
         Observable.changeset(from: favorites)
             .subscribe(onNext: { [unowned self] _, changes in
-                if let changes = changes {
-                    self.tableView.applyChangeset(changes)
-                } else {
-                    self.tableView.reloadData()
-                }
+                self.tableView.reloadData()
             })
             .disposed(by: disposeBag)
     }
@@ -79,50 +73,31 @@ class MainViewController: ViewController <MainViewBindable> {
             $0.separatorStyle = .none
             $0.rowHeight = UITableView.automaticDimension
             $0.estimatedRowHeight = 500
-            $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+            $0.contentInset = UIEdgeInsets(top: self.view.bounds.width, left: 0, bottom: 20, right: 0)
             $0.translatesAutoresizingMaskIntoConstraints = false
             if #available(iOS 11.0, *) {
-                $0.contentInsetAdjustmentBehavior = .automatic
+                $0.contentInsetAdjustmentBehavior = .never
             }
         }
         tableHeaderView.do {
             $0.backgroundColor = .clear
             $0.frame.size = CGSize(width: self.view.bounds.width, height: self.view.bounds.width)
         }
-        headerImageView.do {
-            $0.image = UIImage(named: "watchaTheme")
-            $0.contentMode = .scaleAspectFill
-        }
-        headerTitleLabel.do {
-            $0.font = .systemFont(ofSize: 50, weight: .bold)
-            $0.textColor = .white
-            $0.textAlignment = .center
-            $0.text = "GIPHY"
-        }
 
     }
     
     // MARK: - Layout
     override func layout() {
-        self.view.addSubview(headerImageView)
         self.view.addSubview(tableView)
-        headerImageView.addSubview(headerTitleLabel)
-        tableView.tableHeaderView = tableHeaderView
+        tableView.backgroundView = tablebackgroundView
+        tablebackgroundView.addSubview(tableHeaderView)
         
         tableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-        
-        headerImageView.snp.makeConstraints {
+        tableHeaderView.imageView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(0)
-            $0.left.right.equalToSuperview()
-            $0.height.equalTo(headerImageView.snp.width).offset(0)
-        }
-        
-        headerTitleLabel.snp.makeConstraints {
-            $0.left.right.lessThanOrEqualToSuperview().inset(20)
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview()
+            $0.height.equalTo(tableHeaderView.snp.width)
         }
     }
 
@@ -133,24 +108,11 @@ extension MainViewController {
     func animHeaderView(by offset:CGFloat) {
         guard self.view.snp.target != nil else { return }
     
-        if offset < 0 {
-            // offset 값이 0이하인 경우,
-            // 헤더뷰의 높이는 1:1 사이즈로 유지하고, offset의 0.7배 만큼씩 상단으로 이동
-            headerImageView.snp.updateConstraints {
-                $0.top.equalToSuperview().offset(offset * 0.7)
-                $0.left.right.equalToSuperview()
-                $0.height.equalTo(headerImageView.snp.width).offset(0)
-            }
-        }else{
-            // offset 값이 0이상인 경우,
-            // 헤더뷰의 높이가 offset만큼 확장
-            headerImageView.snp.updateConstraints {
-                $0.top.equalToSuperview().offset(0)
-                $0.left.right.equalToSuperview()
-                $0.height.equalTo(headerImageView.snp.width).offset(offset)
-            }
+        let degree = offset - self.view.bounds.width
+        tableHeaderView.imageView.snp.updateConstraints {
+            $0.top.equalToSuperview().offset(degree > 0 ? 0 : degree)
+            $0.height.equalTo(tableHeaderView.snp.width).offset(degree > 0 ? degree : 0)
         }
-        
     }
 }
 // MARK: - UITableViewDataSource
@@ -168,7 +130,7 @@ extension MainViewController: UITableViewDataSource {
         let favoriteData = favorites[indexPath.row]
         cell.setData(data: favoriteData)
         cell.titleLabel.do {
-            $0.text = indexPath.row == 0 ? "💪😍👍" : ""
+            $0.text = indexPath.row == 0 ? "" : ""
         }
     
         return cell
@@ -202,15 +164,3 @@ extension MainViewController: UITableViewDelegate {
     
     
 }
-extension UITableView {
-    func applyChangeset(_ changes: RealmChangeset) {
-        beginUpdates()
-        
-        deleteRows(at: changes.deleted.map { IndexPath(row: $0, section: 0) }, with: .automatic)
-        insertRows(at: changes.inserted.map { IndexPath(row: $0, section: 0) }, with: .automatic)
-        reloadRows(at: changes.updated.map { IndexPath(row: $0, section: 0) }, with: .automatic)
-        
-        endUpdates()
-    }
-}
-
