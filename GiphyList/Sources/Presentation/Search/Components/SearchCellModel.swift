@@ -9,6 +9,9 @@
 import Foundation
 import RxSwift
 
+// TODO: - https://stackoverflow.com/questions/27919620/how-to-load-gif-image-in-swift
+// 이미지 데이터를 GIF 이미지로 변경하기
+
 struct SearchCellModel {
     let imageLoadNetwork: ImageLoadNetwork
     

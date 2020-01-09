@@ -38,12 +38,8 @@ class ImageCache: ImageCacheProtocol {
         cache.totalCostLimit = Config.defaultSet.memory
         return cache
     }()
-
-    private let lock = NSLock()
-
-    func image(for url: URL) -> UIImage? {
-        lock.lock(); defer { lock.unlock() }
     
+    func image(for url: URL) -> UIImage? {
         if let image = ImageCache.cache.object(forKey: url as AnyObject) as? UIImage {
             return image
         }
@@ -52,13 +48,12 @@ class ImageCache: ImageCacheProtocol {
 
     func saveImage(_ image: UIImage?, for url: URL) {
         guard let image = image else { return removeImage(for: url) }
-
-        lock.lock(); defer { lock.unlock() }
+        
         ImageCache.cache.setObject(image, forKey: url as AnyObject, cost: 1)
     }
 
     func removeImage(for url: URL) {
-        lock.lock(); defer { lock.unlock() }
+        
         ImageCache.cache.removeObject(forKey: url as AnyObject)
     }
 }
